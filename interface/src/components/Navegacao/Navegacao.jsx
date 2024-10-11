@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 function Navegacao() {
     // criando estado para controlar a renderização condicional
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [nomeUsuario, setnomeUsuario] = useState('')
 
     /**
     * Verifica a autenticação do usuário
@@ -16,6 +17,7 @@ function Navegacao() {
         const token = localStorage.getItem('token');  // recupera o token do localstorage
         if (token && AuthRequests.checkTokenExpiry()) {  // varifica a validade do token
             setIsAuthenticated(true);  // caso o token seja válido, seta o valor de autenticação para true
+            setnomeUsuario(localStorage.getItem('username'));
         } else {
             setIsAuthenticated(false);  // caso o token seja inválido, seta o valor de autenticação para false
         }
@@ -45,6 +47,7 @@ function Navegacao() {
                             <Nav className="me-auto">
                                 <Nav.Link href="/pessoas" style={estiloNavOptions}>Pessoas</Nav.Link>
                             </Nav>
+                            <Nav.Item style={estiloNavOptions}>Bem vindo, {nomeUsuario}</Nav.Item>
                             <Button variant='light' onClick={logout}>Sair</Button>
                         </>
                     ) : (
